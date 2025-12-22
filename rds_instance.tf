@@ -1,11 +1,12 @@
 # RDS instance with default PostgreSQL version
+
 resource "aws_db_instance" "hr" {
   identifier             = "hr-database-1"
   allocated_storage      = 20
   instance_class         = "db.t3.medium"
 
   engine                 = "postgres"
-  # engine_version omitted → AWS will pick the default for PostgreSQL
+  # engine_version omitted → AWS picks default version
 
   db_subnet_group_name   = aws_db_subnet_group.rds_hybrid.name
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
