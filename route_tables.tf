@@ -22,10 +22,11 @@ resource "aws_route_table_association" "public" {
 resource "aws_route_table" "private" {
   count  = length(local.azs)
   vpc_id = aws_vpc.rds_hybrid_vpc.id
-  tags   = merge(local.common_tags, { Name = "private-rt-${count.index + 1}" })
+
+  tags = merge(local.common_tags, { Name = "private-rt-${count.index + 1}" })
 }
 
-# Route private subnets to NAT
+# Route private subnets to NAT (one per AZ)
 resource "aws_route" "private_nat" {
   count                  = length(local.azs)
   route_table_id         = aws_route_table.private[count.index].id

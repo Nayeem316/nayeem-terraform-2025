@@ -6,7 +6,7 @@ locals {
     length(split("/", data.aws_caller_identity.current.arn)) - 1
   )
 
-  created_on = timestamp()  # UTC timestamp
+  created_on = timestamp() # UTC timestamp
 
   common_tags = {
     created-by = local.created_by
