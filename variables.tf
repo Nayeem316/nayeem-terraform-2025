@@ -19,3 +19,8 @@ variable "public_db_allowed_cidr" {
   description = "Public IPv4 CIDR allowed to access the RDS instance (e.g., your workstation IP/32)"
   type        = string
 }
+
+variable "dms_subnet_ids" {
+  description = "Subnet IDs for DMS replication instance"
+  type        = list(string)
+}
