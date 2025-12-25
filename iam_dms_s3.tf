@@ -1,5 +1,5 @@
 # iam_dms_s3.tf
-# IAM role and policy for AWS DMS to write to the S3 bucket
+# IAM role + policy for DMS to write to S3
 
 resource "aws_iam_role" "dms_s3_role" {
   name = "dms-s3-access-role"
@@ -27,24 +27,23 @@ resource "aws_iam_role_policy" "dms_s3_policy" {
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
-      # Allow listing the bucket
       {
         Effect = "Allow",
         Action = [
-          "s3:ListBucket"
+          "s3:ListBucket",
+          "s3:GetBucketLocation"
         ],
         Resource = [
           aws_s3_bucket.dms_bucket.arn
         ]
       },
-      # Allow writing objects into the bucket
       {
         Effect = "Allow",
         Action = [
           "s3:PutObject",
           "s3:AbortMultipartUpload",
-          "s3:ListBucketMultipartUploads",
-          "s3:ListMultipartUploadParts"
+          "s3:ListMultipartUploadParts",
+          "s3:ListBucketMultipartUploads"
         ],
         Resource = [
           "${aws_s3_bucket.dms_bucket.arn}/*"

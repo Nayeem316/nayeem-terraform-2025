@@ -24,3 +24,9 @@ variable "dms_subnet_ids" {
   description = "Subnet IDs for DMS replication instance"
   type        = list(string)
 }
+
+variable "dms_password" {
+  description = "Password for the DMS user"
+  type        = string
+  sensitive   = true
+}
