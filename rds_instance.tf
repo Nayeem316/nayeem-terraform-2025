@@ -1,17 +1,18 @@
-# RDS instance with default PostgreSQL version
-
 resource "aws_db_instance" "hr" {
   identifier        = "hr-database-1"
   allocated_storage = 20
   instance_class    = "db.t3.medium"
 
-  engine = "postgres"
-  # engine_version omitted → AWS picks default version
+  engine         = "postgres"
+  engine_version = "17.6"
 
   db_subnet_group_name   = aws_db_subnet_group.rds_hybrid.name
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
   multi_az               = true
   publicly_accessible    = true
+
+  parameter_group_name = aws_db_parameter_group.hr_dms.name
+  apply_immediately    = true
 
   storage_encrypted       = true
   backup_retention_period = 7
